@@ -43,7 +43,10 @@ start_cost = copy.deepcopy(cost)
 start_demand = copy.deepcopy(demand)
 start_average = average(cost)
 start_income = income(cost, demand)
-print(start_average, start_income)
+print("Start")
+print("Average and profit",start_average, start_income)
+print(cost)
+print(demand)
 
 # The influence of each on the change in average price and total profit.
 for i in range(9):
@@ -57,8 +60,8 @@ for i in range(9):
     print(i, round(average(cost),3), round(income(cost, demand),4))
     cost = copy.deepcopy(start_cost)
     demand = copy.deepcopy(start_demand)
-print(cost)
-print(demand)
+
+print("For each item")
 print("Cost error", cost_er)
 print("Income error", income_er)
 # Find some min and max elements in array.
@@ -82,10 +85,12 @@ print(demand)
 cost = copy.deepcopy(start_cost)
 demand = copy.deepcopy(start_demand)
 
+print("Iterate through all the options")
+best_var = list()
 # Generates a random array and checks for changes in average price and profit.
 for j in range(1000000):
-    rnd_mass = random.sample(range(8), random.randint(0, 8))
-
+    rnd_mass = random.sample(range(9), random.randint(1, 9))
+    # print(rnd_mass)
     for i in rnd_mass:
         # Algorithm from the condition.
         cost[i] = cost[i] * 1.01
@@ -94,7 +99,8 @@ for j in range(1000000):
         demand[i+1] = demand[i+1] + lose
         cost_er.append(average(cost) - start_average)
         income_er.append(start_income - income(cost, demand))
-    if(average(cost) > start_average) and (income(cost, demand) >= start_income - 1):
+    if(average(cost) > start_average) and (income(cost, demand) >= start_income - 1) and rnd_mass not in best_var:
+        best_var.append(rnd_mass)
         print(rnd_mass, average(cost), income(cost, demand))
         print(cost)
         print(demand)
@@ -102,6 +108,6 @@ for j in range(1000000):
     cost = copy.deepcopy(start_cost)
     demand = copy.deepcopy(start_demand)
 
-# As a result, the best average price – profit ratio is [5], [6], [7], [5, 7]. At the same time, the profit is still less than the initial one.
-
+# As a result, the best average price – profit ratio is [6], [7, 8], [7, 5], [6, 8], [7], [8, 5], [8], [5], [5, 8], [5, 7], [8, 7], [8, 6], [7, 8, 5], [8, 7, 5], [7, 5, 8], [5, 8, 7], [8, 5, 7], [5, 7, 8]. At the same time, the profit is still less than the initial one.
+print(best_var)
 
